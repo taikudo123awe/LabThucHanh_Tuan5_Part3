@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+
+<div class="p-4 mb-4 bg-light rounded-3">
+    <h1 class="display-5">Danh sách Sản phẩm</h1>
+    <p class="lead">Tìm kiếm và lọc sản phẩm theo nhu cầu của bạn.</p>
+</div>
+
+<!-- Thanh công cụ tìm kiếm và lọc -->
+<form action="/" method="GET" class="row g-3 mb-4 align-items-center">
+    <div class="col-md-6">
+        <input type="text" class="form-control" name="search" placeholder="Nhập tên sản phẩm để tìm kiếm...">
+    </div>
+    <div class="col-md-4">
+        <select name="supplier" class="form-select">
+            <option value="">-- Lọc theo nhà cung cấp --</option>
+            <% suppliers.forEach(supplier => { %>
+                <option value="<%= supplier._id %>" <%= selectedSupplier == supplier._id ? 'selected' : '' %>>
+                    <%= supplier.name %>
+                </option>
+            <% }) %>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Tìm</button>
+    </div>
+</form>
+
+<!-- Hiển thị sản phẩm -->
+<div class="row">
+    <% if (products.length > 0) { %>
+        <% products.forEach(product => { %>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= product.name %></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Nhà cung cấp: <%= product.supplier.name %></h6>
+                        <p class="card-text">Giá: <strong><%= product.price.toLocaleString('vi-VN') %> VNĐ</strong></p>
+                        <p class="card-text">Số lượng còn lại: <%= product.quantity %></p>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p class="text-center">Không tìm thấy sản phẩm nào.</p>
+    <% } %>
+</div>
+
+<%- include('partials/footer') %>

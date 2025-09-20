@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+
+<h1><%= title %></h1>
+
+<% 
+    const actionUrl = product ? `/admin/products/edit/${product._id}` : '/admin/products/add';
+%>
+
+<form action="<%= actionUrl %>" method="POST">
+    <div class="mb-3">
+        <label for="name" class="form-label">Tên sản phẩm</label>
+        <input type="text" class="form-control" id="name" name="name" value="<%= product ? product.name : '' %>" required>
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label">Giá</label>
+        <input type="number" class="form-control" id="price" name="price" value="<%= product ? product.price : '' %>" required>
+    </div>
+    <div class="mb-3">
+        <label for="quantity" class="form-label">Số lượng</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" value="<%= product ? product.quantity : '' %>" required>
+    </div>
+    <div class="mb-3">
+        <label for="supplier" class="form-label">Nhà cung cấp</label>
+        <select class="form-select" id="supplier" name="supplier" required>
+            <option value="" disabled <%= !product ? 'selected' : '' %>>-- Chọn nhà cung cấp --</option>
+            <% suppliers.forEach(s => { %>
+                <option value="<%= s._id %>" 
+                    <% if (product && product.supplier._id.toString() === s._id.toString()) { %>
+                        selected
+                    <% } %>>
+                    <%= s.name %>
+                </option>
+            <% }) %>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Lưu</button>
+    <a href="/admin/products" class="btn btn-secondary">Hủy</a>
+</form>
+
+<%- include('../partials/footer') %>
+
+

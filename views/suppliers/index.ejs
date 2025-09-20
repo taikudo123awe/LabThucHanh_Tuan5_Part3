@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1><%= title %></h1>
+    <a href="/admin/suppliers/add" class="btn btn-primary">Thêm mới Nhà cung cấp</a>
+</div>
+
+<table class="table table-striped table-hover table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Tên nhà cung cấp</th>
+            <th>Địa chỉ</th>
+            <th>Số điện thoại</th>
+            <th style="width: 150px;">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% suppliers.forEach(supplier => { %>
+            <tr>
+                <td><%= supplier.name %></td>
+                <td><%= supplier.address %></td>
+                <td><%= supplier.phone %></td>
+                <td>
+                    <a href="/admin/suppliers/edit/<%= supplier._id %>" class="btn btn-warning btn-sm">Sửa</a>
+                    <form action="/admin/suppliers/delete/<%= supplier._id %>" method="POST" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<%- include('../partials/footer') %>
